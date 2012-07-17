@@ -29,7 +29,7 @@ class Login extends CI_Controller {
 				redirect('admin/dashboard');
 			}			
 		}
-		
+	
 		$this->load->view('admin/shared/admin-header',$data);
 		$this->load->view('admin/login/index.php',$data);
 		$this->load->view('admin/shared/admin-footer',$data);
