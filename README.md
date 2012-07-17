@@ -13,14 +13,26 @@ The main thing to change here is the encryption_key setting.  This is used to pr
 
 Database
 ----------
-A sample database is included in the database.sql file.  This just contains an admin user table as otherwise you'll never be able to log in to the system.  You'll need to install the database in phpMyAdmin (or whatever you are using) and then alter the settings in application/config/database.php to get it working
+A sample database is included in the database.sql file.  This just contains an admin user table as otherwise you'll never be able to log in to the system.  You'll need to install the database in phpMyAdmin (or whatever you are using) and then alter the settings in application/config/database.php to get it working.  The settings you will most likely need to change are:
+
+<pre>
+$db['default']['username'] = '';
+$db['default']['password'] = '';
+$db['default']['database'] = '';
+</pre>
+
+User setup
+-----------
+
+No users are included in the database as standard, you will need to create an admin user which at the moment is a slightly manual process.  Generate a password by including the code
+
+<pre>
+echo sha1('password' . $this->config->item('encryption_key'));
+</pre>
+
+somewhere in your code.  Use phpMyAdmin to insert a row into the administrators table, you can use whatever you like as your username (I'd suggest 'admin' or something similar) and then use the hash created by the code above as the password.
 
 
-
-
-
-
-* User setup
 * Autoload
 * Form Validation
 
