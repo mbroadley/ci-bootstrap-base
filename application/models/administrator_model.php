@@ -15,6 +15,15 @@ class Administrator_model extends MY_Model {
 			return false;
 		}
 	}
+	
+	function setAdminSession($user) {
+	
+		$this->session->set_userdata('admin_logged_in', true);
+		$this->session->set_userdata('admin_id', $user->id);
+		$this->session->set_userdata('admin_username', $user->username);
+		$this->session->set_userdata('admin_password', $user->password);
+		
+	}
 }
 
 ?>

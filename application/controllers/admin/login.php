@@ -10,24 +10,31 @@ class Login extends CI_Controller {
 	
 	function index()
 	{
-		
 		$data = array();
 	
 		$this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert">×</button>','</div>');
 	
-		if($this->form_validation->run() == TRUE) {
+		print_r($_POST);	
+
+		if($this->form_validation->run('login/index') == TRUE) {
 		
 			if($this->administrator_model->count_by(array('username' => set_value('username'),'password' => sha1(set_value('password') . $this->config->item('encryption_key')),'active' => 1)) == 1) {
 			
-				$user = $this->administrator_model->get_by(array('username' => set_value('username'),'password' => sha1(set_value('password') . $this->config->item('encryption_key')),'active' => 1));
+				echo "HERER";
 			
-				$this->session->set_userdata('admin_logged_in', true);
-				$this->session->set_userdata('admin_id', $user->id);
-				$this->session->set_userdata('admin_username', $user->username);
-				$this->session->set_userdata('admin_password', $user->password);
+				$user = $this->administrator_model->get_by(array('username' => set_value('username'),'password' => sha1(set_value('password') . $this->config->item('encryption_key')),'active' => 1));
+				$this->administrator_model->setAdminSession($user);
 				
 				redirect('admin/dashboard');
-			}			
+				
+			} else {
+			
+				echo "HERER2";
+			
+				$data['login_error'] = true;				
+			}
+		} else {
+			echo "HERER4";
 		}
 	
 		$this->load->view('admin/shared/admin-header',$data);
